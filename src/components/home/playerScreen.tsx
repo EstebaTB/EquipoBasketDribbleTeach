@@ -1,7 +1,8 @@
 import {IPlayer} from '@/src/interface/IPlayer';
 import React, {useEffect, useState} from 'react';
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {createPlayerSubscription} from '../../services/firebase';
+import PlayerCard from './playerCard';
 
 export default function PlayerScreen(): React.JSX.Element {
   const [players, setPlayers] = useState<IPlayer[]>([]);
@@ -11,20 +12,11 @@ export default function PlayerScreen(): React.JSX.Element {
     return () => unsubscribe();
   }, []);
 
-  const renderItem = ({item}: {item: IPlayer}) => (
-    <View style={PlayersStyles.item}>
-      <Image source={{uri: item.imagePath}} style={PlayersStyles.foto} />
-      <View>
-        <Text style={PlayersStyles.nombre}>
-          {item.name} {item.surname}
-        </Text>
-        <Text style={PlayersStyles.posicion}>{item.jerseyNumber}</Text>
-      </View>
-    </View>
-  );
+  const renderItem = ({item}: {item: IPlayer}) => <PlayerCard {...item} />;
 
   return (
     <FlatList
+      style={styles.flatList}
       data={players}
       keyExtractor={(item, index) => item.id || index.toString()} // Usar índice como respaldo
       renderItem={renderItem}
@@ -32,27 +24,11 @@ export default function PlayerScreen(): React.JSX.Element {
   );
 }
 
-const PlayersStyles = StyleSheet.create({
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  foto: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 15,
-  },
-  nombre: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  posicion: {
-    fontSize: 16,
-    color: 'gray',
+const styles = StyleSheet.create({
+  flatList: {
+    // backgroundColor:'red',
+    // alignSelf: 'center',
+    // width: '80%',
   },
   loading: {
     flex: 1,
@@ -66,12 +42,8 @@ const PlayersStyles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
   },
   image: {
-    width: 200,
-    height: 200, // Ajusta según tus necesidades
+    width: 250,
+    height: 250, // Ajusta según tus necesidades
     resizeMode: 'cover', // Opciones: 'cover', 'contain', 'stretch', etc.
-  },
-  video: {
-    width: '90%', // Ancho del video
-    height: 200, // Altura del video
   },
 });
