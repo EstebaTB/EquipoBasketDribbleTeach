@@ -13,8 +13,7 @@ includeBuild('../node_modules/@react-native/gradle-plugin')
 extensions.configure<com.facebook.react.ReactSettingsExtension> {
     it.autolinkLibrariesFromCommand()
 }
-
+*/
 extensions.configure(com.facebook.react.ReactSettingsExtension){ 
     ex -> ex.autolinkLibrariesFromCommand() 
 }
-*/
