@@ -5,127 +5,51 @@
  * @format
  */
 
-import React, { useEffect, useState } from 'react';
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
+import {Image, StatusBar, StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import { IPlayer } from './src/interface/IPlayer';
-import { createPlayerSubscription } from './src/services/firebase';
+import PlayerScreen from './src/components/home/playerScreen';
+
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [players, setPlayers] = useState<IPlayer[]>([]);
-
-  useEffect(() => {
-    const unsubscribe = createPlayerSubscription(setPlayers);
-    return () => unsubscribe();
-  }, []);
-
+  // const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: 'rgb(35, 56, 83)',
   };
-
-    const renderItem = ({item}: {item: IPlayer}) => (
-      <View style={PlayersStyles.item}>
-        <Image source={{uri: item.imagePath}} style={PlayersStyles.foto} />
-        <View>
-          <Text style={PlayersStyles.nombre}>
-            {item.name} {item.surname}
-          </Text>
-          <Text style={PlayersStyles.posicion}>{item.jerseyNumber}</Text>
-        </View>
-      </View>
-    );
-
+  const logo = () => (
+    <Image source={require('./src/assets/img/logo.png')} style={styles.logo} />
+  );
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <FlatList
-        data={players}
-        keyExtractor={(item, index) => item.id || index.toString()} // Usar índice como respaldo
-        renderItem={renderItem}
-      />
-    </SafeAreaView>
+    <NavigationContainer>
+        <StatusBar backgroundColor={backgroundStyle.backgroundColor} />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Players"
+          component={PlayerScreen}
+          options={{
+            headerStyle: backgroundStyle,
+            headerTintColor: Colors.white,
+            headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
+            headerTitleAlign: 'center',
+            headerLeft: logo,
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
 
-
-const PlayersStyles = StyleSheet.create({
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  foto: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 15,
-  },
-  nombre: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  posicion: {
-    fontSize: 16,
-    color: 'gray',
-  },
-  loading: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  image: {
-    width: 200,
-    height: 200, // Ajusta según tus necesidades
-    resizeMode: 'cover', // Opciones: 'cover', 'contain', 'stretch', etc.
-  },
-  video: {
-    width: '90%', // Ancho del video
-    height: 200, // Altura del video
+const styles = StyleSheet.create({
+  logo: {
+    width: 45,
+    height: 45,
   },
 });
-
-
-// const styles = StyleSheet.create({
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-// });
 
 export default App;
