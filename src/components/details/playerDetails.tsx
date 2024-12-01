@@ -1,8 +1,15 @@
 import {IPlayer} from '@/src/interface/IPlayer';
+import {RouteProp} from '@react-navigation/native';
 import React from 'react';
 import {Text, View} from 'react-native';
 
-export default function PlayerDetailsScreen({route}): React.JSX.Element {
+type PlayerDetailsRouteProp = RouteProp<{params: {player: IPlayer}}, 'params'>;
+
+export default function PlayerDetailsScreen({
+  route,
+}: {
+  route: PlayerDetailsRouteProp;
+}): React.JSX.Element {
   const player = route.params as IPlayer;
   console.log(player);
 
