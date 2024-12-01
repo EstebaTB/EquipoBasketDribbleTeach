@@ -10,7 +10,7 @@ type StackParamList = {
   Players: undefined;
   Details: IPlayer;
 };
-type NavigationProp = NativeStackNavigationProp<StackParamList, 'Players'>;
+type NavigationProp = NativeStackNavigationProp<StackParamList, 'Details'>;
 
 export default function PlayersScreen(): React.JSX.Element {
   const [players, setPlayers] = useState<IPlayer[]>([]);
