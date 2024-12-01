@@ -10,7 +10,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
 import {Image, StatusBar, StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import PlayerScreen from './src/components/home/playerScreen';
+import PlayerDetailsScreen from './src/components/details/playerDetails';
+import PlayersScreen from './src/components/home/playersScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,22 +27,23 @@ function App(): React.JSX.Element {
 
   return (
     <NavigationContainer>
-        <StatusBar backgroundColor={backgroundStyle.backgroundColor} />
+      <StatusBar backgroundColor={backgroundStyle.backgroundColor} />
       <Stack.Navigator>
         <Stack.Screen
           name="Players"
-          component={PlayerScreen}
+          component={PlayersScreen}
           options={{
             headerStyle: backgroundStyle,
             headerTintColor: Colors.white,
             headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
             headerTitleAlign: 'center',
             headerLeft: logo,
+            contentStyle: {backgroundColor: '#a7beff'},
           }}
         />
+        <Stack.Screen name="Details" component={PlayerDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-
   );
 }
 
