@@ -1,10 +1,10 @@
-import { IPlayer } from '@/src/interface/IPlayer';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useEffect, useState } from 'react';
-import { FlatList, Pressable, StyleSheet } from 'react-native';
-import { createPlayerSubscription } from '../../services/firebase';
+import {IPlayer} from '@/src/interface/IPlayer';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, Pressable, StyleSheet} from 'react-native';
+import {createPlayerSubscription} from '../../services/firebase';
 import PlayerCard from './playerCard';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type StackParamList = {
   Players: undefined;
