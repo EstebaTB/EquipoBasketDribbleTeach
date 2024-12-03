@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Image, StatusBar, StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PlayerDetailsScreen from './src/components/details/playerDetails';
-import PlayerScreen from './src/components/PlayerCard/playersScreen';
+import PlayerScreen from './src/components/home/componentDidMount';
 
 // Crear el stack de navegación
 const Stack = createNativeStackNavigator();

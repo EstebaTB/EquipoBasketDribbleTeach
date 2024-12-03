@@ -3,8 +3,10 @@ import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Pressable, StyleSheet} from 'react-native';
 import {createPlayerSubscription} from '../../services/firebase';
-import PlayerCard from './playerCard';
+import PlayerCard from '../PlayerCard/playerCard';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+// Este es el ComponentDidMount.tsx que piden en el producto.
 
 type StackParamList = {
   Players: undefined;
