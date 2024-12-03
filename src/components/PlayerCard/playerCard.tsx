@@ -1,4 +1,4 @@
-import {IPlayer} from '@/src/interface/IPlayer';
+import {IPlayer} from '../../interface/IPlayer';
 import React, {useEffect} from 'react';
 import {
   Animated,

@@ -1,27 +1,21 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
 import {Image, StatusBar, StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PlayerDetailsScreen from './src/components/details/playerDetails';
-import PlayersScreen from './src/components/home/playersScreen';
+import PlayerScreen from './src/components/PlayerCard/playersScreen';
 
+// Crear el stack de navegación
 const Stack = createNativeStackNavigator();
 
+// Componente principal
 function App(): React.JSX.Element {
-  // const isDarkMode = useColorScheme() === 'dark';
-
   const backgroundStyle = {
     backgroundColor: 'rgb(35, 56, 83)',
   };
-  const logo = () => (
+
+  const Logo = () => (
     <Image source={require('./src/assets/img/logo.png')} style={styles.logo} />
   );
 
@@ -29,19 +23,29 @@ function App(): React.JSX.Element {
     <NavigationContainer>
       <StatusBar backgroundColor={backgroundStyle.backgroundColor} />
       <Stack.Navigator>
+        {/* Pantalla de jugadores */}
         <Stack.Screen
           name="Players"
-          component={PlayersScreen}
+          component={PlayerScreen}
           options={{
             headerStyle: backgroundStyle,
             headerTintColor: Colors.white,
             headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
             headerTitleAlign: 'center',
-            headerLeft: logo,
-            contentStyle: {backgroundColor: '#a7beff'},
+            headerLeft: Logo,
           }}
         />
-        <Stack.Screen name="Details" component={PlayerDetailsScreen} />
+        {/* Pantalla de detalles */}
+        <Stack.Screen
+          name="Details"
+          component={PlayerDetailsScreen}
+          options={{
+            headerStyle: backgroundStyle,
+            headerTintColor: Colors.white,
+            headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
+            headerTitleAlign: 'center',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

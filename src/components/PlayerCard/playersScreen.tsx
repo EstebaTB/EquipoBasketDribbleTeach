@@ -1,4 +1,4 @@
-import {IPlayer} from '@/src/interface/IPlayer';
+import {IPlayer} from '../../interface/IPlayer';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {FlatList, Pressable, StyleSheet} from 'react-native';
