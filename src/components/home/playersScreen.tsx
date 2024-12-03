@@ -1,18 +1,31 @@
 import {IPlayer} from '@/src/interface/IPlayer';
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, Pressable, StyleSheet} from 'react-native';
 import {createPlayerSubscription} from '../../services/firebase';
 import PlayerCard from './playerCard';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export default function PlayerScreen(): React.JSX.Element {
+type StackParamList = {
+  Players: undefined;
+  Details: IPlayer;
+};
+type NavigationProp = NativeStackNavigationProp<StackParamList, 'Details'>;
+
+export default function PlayersScreen(): React.JSX.Element {
   const [players, setPlayers] = useState<IPlayer[]>([]);
+  const navigation = useNavigation<NavigationProp>();
 
   useEffect(() => {
     const unsubscribe = createPlayerSubscription(setPlayers);
     return () => unsubscribe();
   }, []);
 
-  const renderItem = ({item}: {item: IPlayer}) => <PlayerCard {...item} />;
+  const renderItem = ({item}: {item: IPlayer}) => (
+    <Pressable onPress={() => navigation.navigate('Details', item)}>
+      <PlayerCard {...item} />
+    </Pressable>
+  );
 
   return (
     <FlatList
