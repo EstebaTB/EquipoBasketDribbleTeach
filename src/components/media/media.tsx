@@ -8,7 +8,7 @@ import {
     View,
   } from 'react-native';
 
-export default function Media(){
+export default function MediaScreen(){
 
     return(
         // -----------------------

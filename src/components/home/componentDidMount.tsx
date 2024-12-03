@@ -1,12 +1,19 @@
 import {IPlayer} from '../../interface/IPlayer';
 import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
-import {FlatList, Pressable, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  Pressable,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  Text,
+} from 'react-native';
 import {createPlayerSubscription} from '../../services/firebase';
 import PlayerCard from '../PlayerCard/playerCard';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
-// Este es el ComponentDidMount.tsx que piden en el producto.
+// Este es el componentDidMount
 
 type StackParamList = {
   Players: undefined;
@@ -16,10 +23,14 @@ type NavigationProp = NativeStackNavigationProp<StackParamList, 'Details'>;
 
 export default function PlayersScreen(): React.JSX.Element {
   const [players, setPlayers] = useState<IPlayer[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // Estado para el indicador de carga
   const navigation = useNavigation<NavigationProp>();
 
   useEffect(() => {
-    const unsubscribe = createPlayerSubscription(setPlayers);
+    const unsubscribe = createPlayerSubscription((data) => {
+      setPlayers(data);
+      setIsLoading(false); // Desactiva la carga cuando los datos estén listos
+    });
     return () => unsubscribe();
   }, []);
 
@@ -28,6 +39,16 @@ export default function PlayersScreen(): React.JSX.Element {
       <PlayerCard {...item} />
     </Pressable>
   );
+
+  if (isLoading) {
+    // Mostrar pantalla de carga mientras se obtienen los datos
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text style={styles.loadingText}>Cargando jugadores...</Text>
+      </View>
+    );
+  }
 
   return (
     <FlatList
@@ -41,24 +62,18 @@ export default function PlayersScreen(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   flatList: {
-    // backgroundColor:'red',
-    // alignSelf: 'center',
-    // width: '80%',
+    flex: 1,
+    backgroundColor: '#f8f8f8',
   },
-  loading: {
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ffffff',
   },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-  },
-  image: {
-    width: 250,
-    height: 250, // Ajusta según tus necesidades
-    resizeMode: 'cover', // Opciones: 'cover', 'contain', 'stretch', etc.
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#333333',
   },
 });

@@ -1,10 +1,11 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Image, StatusBar, StyleSheet} from 'react-native';
+import {Image, StatusBar, StyleSheet, Button} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PlayerDetailsScreen from './src/components/details/playerDetails';
 import PlayerScreen from './src/components/home/componentDidMount';
+import MediaScreen from './src/components/media/media';
 
 // Crear el stack de navegación
 const Stack = createNativeStackNavigator();
@@ -33,17 +34,38 @@ function App(): React.JSX.Element {
             headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
             headerTitleAlign: 'center',
             headerLeft: Logo,
+            title: 'Dribble Teach',
           }}
         />
         {/* Pantalla de detalles */}
         <Stack.Screen
           name="Details"
           component={PlayerDetailsScreen}
+          options={({navigation}) => ({
+            headerStyle: backgroundStyle,
+            headerTintColor: Colors.white,
+            headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
+            headerTitleAlign: 'center',
+            title: 'Detalles del jugador',
+            headerRight: () => (
+              <Button
+                title="Media"
+                color={backgroundStyle.backgroundColor}
+                onPress={() => navigation.navigate('Media')}
+              />
+            ),
+          })}
+        />
+        {/* Pantalla de Multimedia */}
+        <Stack.Screen
+          name="Media"
+          component={MediaScreen} // Registra la nueva pantalla
           options={{
             headerStyle: backgroundStyle,
             headerTintColor: Colors.white,
             headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
             headerTitleAlign: 'center',
+            title: 'Medios del Jugador',
           }}
         />
       </Stack.Navigator>
