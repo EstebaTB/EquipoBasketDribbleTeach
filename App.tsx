@@ -65,7 +65,7 @@ function App(): React.JSX.Element {
             headerTintColor: Colors.white,
             headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
             headerTitleAlign: 'center',
-            title: 'Medios del Jugador',
+            title: 'Multimedia del jugador',
           }}
         />
       </Stack.Navigator>
