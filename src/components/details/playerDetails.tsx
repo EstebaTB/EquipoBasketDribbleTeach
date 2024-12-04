@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  Button,
 } from 'react-native';
 import StarRating from './starrating';
 import { IPlayer } from '../../interface/IPlayer';
@@ -15,7 +16,7 @@ import { RouteProp } from '@react-navigation/native';
 type PlayerDetailsRouteProp = RouteProp<{ params: { player: IPlayer } }, 'params'>;
 
 export default function PlayerDetailsScreen({
-  route,
+  route
 }: {
   route: PlayerDetailsRouteProp;
 }): React.JSX.Element {

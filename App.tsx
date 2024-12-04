@@ -17,8 +17,8 @@ function App(): React.JSX.Element {
   };
 
   const Logo = () => (
-    <Image source={require('./src/assets/img/logo.png')} style={styles.logo} />
-  );
+  <Image source={require('./src/assets/img/logo.png')} style={styles.logo} />
+);
 
   return (
     <NavigationContainer>
@@ -41,20 +41,26 @@ function App(): React.JSX.Element {
         <Stack.Screen
           name="Details"
           component={PlayerDetailsScreen}
-          options={({navigation}) => ({
-            headerStyle: backgroundStyle,
-            headerTintColor: Colors.white,
-            headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
-            headerTitleAlign: 'center',
-            title: 'Detalles del jugador',
-            headerRight: () => (
-              <Button
-                title="Media"
-                color={backgroundStyle.backgroundColor}
-                onPress={() => navigation.navigate('Media')}
-              />
-            ),
-          })}
+          options={({ route, navigation }) => {
+            const player = route.params; // Recibe el jugador desde los parámetros
+            return {
+              headerStyle: backgroundStyle,
+              headerTintColor: Colors.white,
+              headerTitleStyle: { fontWeight: 'bold', fontSize: 24 },
+              headerTitleAlign: 'center',
+              title: 'Detalles del jugador',
+              headerRight: () => (
+                <Button
+                  title="Media"
+                  color={backgroundStyle.backgroundColor}
+                  onPress={() => {
+                    console.log('Navegando a Media con jugador:', player); // Verifica que el jugador es válido
+                    navigation.navigate('Media', { player }); // Pasa el jugador a Media
+                  }}
+                />
+              ),
+            };
+          }}
         />
         {/* Pantalla de Multimedia */}
         <Stack.Screen
