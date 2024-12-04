@@ -27,20 +27,10 @@ const MediaScreen = ({ route }: { route: { params: { player: IPlayer } } }) => {
     const regex = /(?:youtube\.com\/(?:[^\/]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     if (match && match[1]) {
-        // return `https://www.youtube.com/embed/${match[1]}?autoplay=1`;
-      return `https://www.youtube.com/watch?${match[1]}`;
+      return `https://www.youtube.com/embed/${match[1]}?autoplay=1`;
     }
     return null; // Si no se encuentra un ID válido
   };
-
-  const getYouTubeVideoID = (url: string) => {
-    const regex = /(?:youtube\.com\/(?:[^\/]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const match = url.match(regex);
-    if (match && match[1]) {
-      return match[1];
-    }
-    return null; // Si no se encuentra un ID válido
-  }; 
 
   return (
     <View style={styles.container}>
@@ -59,13 +49,13 @@ const MediaScreen = ({ route }: { route: { params: { player: IPlayer } } }) => {
       {selectedVideo && (
         <View style={styles.videoContainer}>
           {isYouTubeVideo(selectedVideo) ? (
-          <WebView
-          source={{ uri: getYouTubeEmbedURL(selectedVideo) }}
-          style={styles.videoPlayer}
-          javaScriptEnabled={true} // Habilitar JavaScript
-          domStorageEnabled={true} // Habilitar almacenamiento DOM
-          mediaPlaybackRequiresUserAction={false} // Permitir reproducción automática
-        />
+            <WebView
+            source={{ uri: getYouTubeEmbedURL(selectedVideo) }}
+            style={styles.videoPlayer}
+            javaScriptEnabled={true} // Habilitar JavaScript
+            domStorageEnabled={true} // Habilitar almacenamiento DOM
+            mediaPlaybackRequiresUserAction={false} // Permitir reproducción automática
+          />
           ) : isMP4Video(selectedVideo) ? (
             <Video
               source={{ uri: `https://jlgjgh-4200.csb.app/${selectedVideo}` }} // Construye la URL completa
