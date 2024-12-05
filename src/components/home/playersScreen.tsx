@@ -5,7 +5,7 @@ import {FlatList, Pressable, StyleSheet, Text, View, TextInput} from 'react-nati
 import {Picker} from '@react-native-picker/picker';
 import {createPlayerSubscription} from '../../services/firebase';
 import PlayerCard from './playerCard';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 type StackParamList = {
   Players: undefined;
@@ -17,7 +17,7 @@ export default function PlayersScreen(): React.JSX.Element {
   const [players, setPlayers] = useState<IPlayer[]>([]);
   const [filteredPlayers, setFilteredPlayers] = useState<IPlayer[]>([]);
   const [search, setSearch] = useState('');
-  const [position, setPosition] = useState('');
+  const [position, setPosition] = useState('all');
   const navigation = useNavigation<NavigationProp>();
 
   useEffect(() => {
@@ -27,18 +27,22 @@ export default function PlayersScreen(): React.JSX.Element {
 
   useEffect(() => {
     setFilteredPlayers(
-      players.filter(player =>
-        player.name?.toLowerCase().includes(search.toLowerCase()) &&
-        (position === '' || player.position?.toLowerCase() === position.toLowerCase())
-      )
+      players.filter(player => {
+        const matchesName = player.name?.toLowerCase().includes(search.toLowerCase());
+        const matchesPosition = position === 'all' || player.position?.toLowerCase() === position.toLowerCase();
+        return matchesName && matchesPosition;
+      })
     );
   }, [search, position, players]);
 
-  const renderItem = useCallback(({ item }: { item: IPlayer }) => (
-    <Pressable onPress={() => navigation.navigate('Details', item)}>
-      <PlayerCard {...item} />
-    </Pressable>
-  ), [navigation]);
+  const renderItem = useCallback(
+    ({item}: {item: IPlayer}) => (
+      <Pressable onPress={() => navigation.navigate('Details', item)}>
+        <PlayerCard {...item} />
+      </Pressable>
+    ),
+    [navigation]
+  );
 
   return (
     <View style={styles.container}>
@@ -50,17 +54,19 @@ export default function PlayersScreen(): React.JSX.Element {
         onChangeText={setSearch}
       />
       <Picker
-        selectedValue={position}
-        style={styles.picker}
-        onValueChange={(itemValue) => setPosition(itemValue)}
-      >
-        <Picker.Item label="Todas las posiciones" value="" />
-        <Picker.Item label="Base" value="Base" />
-        <Picker.Item label="Escolta" value="Escolta" />
-        <Picker.Item label="Alero" value="Alero" />
-        <Picker.Item label="Ala-Pívot" value="Ala-Pívot" />
-        <Picker.Item label="Pívot" value="Pívot" />
-      </Picker>
+  selectedValue={position}
+  style={styles.picker}
+  onValueChange={(itemValue) => {
+    setPosition(itemValue);
+  }}
+>
+  <Picker.Item label="Todas las posiciones" value="all" />
+  <Picker.Item label="Base" value="Base" />
+  <Picker.Item label="Escolta" value="Escolta" />
+  <Picker.Item label="Alero" value="Alero" />
+  <Picker.Item label="Ala-Pívot" value="Ala-Pívot" />
+  <Picker.Item label="Pívot" value="Pívot" />
+</Picker>
       <FlatList
         style={styles.flatList}
         data={filteredPlayers}
