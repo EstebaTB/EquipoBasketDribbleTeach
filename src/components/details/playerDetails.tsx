@@ -22,7 +22,17 @@ export default function PlayerDetailsScreen({
 }): React.JSX.Element {
   const player = route.params as IPlayer;
   const [isModalVisible, setModalVisible] = useState(false);
+    
+     // Función para calcular la media de puntos
+     const calculateAveragePoints = (pointsArray: number[]): number => {
+      if (pointsArray.length === 0) return 0;
+      const total = pointsArray.reduce((sum, value) => sum + value, 0);
+      return total / pointsArray.length;
+    };
 
+    const averagePoints = calculateAveragePoints(player.points || []);
+
+  
   return (
     <ScrollView style={styles.container}>
       {/* Encabezado con imagen */}
@@ -35,6 +45,7 @@ export default function PlayerDetailsScreen({
             style={styles.playerImage}
           />
         </TouchableOpacity>
+
         <View style={styles.headerInfo}>
           <Text style={styles.name}>
             {player.name} {player.surname}
@@ -61,7 +72,7 @@ export default function PlayerDetailsScreen({
               uri: player.imagePath || 'https://via.placeholder.com/150',
             }}
             style={styles.modalImage}
-          />
+           />
         </View>
       </Modal>
 
@@ -78,22 +89,62 @@ export default function PlayerDetailsScreen({
       <Text style={styles.cardTitle}>Estadísticas</Text>
       <Text style={styles.infoText}>Partidos jugados: {player.gamesPlayed}</Text>
       <Text style={styles.infoText}>Puntos último partido: {player.pointsLastGame}</Text>
-      <Text style={styles.infoText}>Media puntos últimos 10 partidos: {player.points}</Text>
+      <Text style={styles.infoText}>Media puntos últimos 10 partidos: {averagePoints.toFixed(1)}</Text>
       <Text style={styles.infoText}>Total faltas: {player.totalFouls}</Text>
       <Text style={styles.infoText}>Faltas último partido: {player.foulsLastGame}</Text>
     </View>
 
     {/* Habilidades */}
     <View style={styles.card}>
-      <Text style={styles.cardTitle}>Habilidades</Text>
-      <Text style={styles.infoText}>Interior: {player.interior}</Text>
-      <Text style={styles.infoText}>Exterior: {player.exterior}</Text>
-      <Text style={styles.infoText}>Diestro: {player.rightHanded}</Text>
-      <Text style={styles.infoText}>Zurdo: {player.leftHanded}</Text>
-      <Text style={styles.infoText}>Coordinación: <StarRating rating={player.coordinated} /></Text>
-      <Text style={styles.infoText}>Fuerza: <StarRating rating={player.strong} /></Text>
-      <Text style={styles.infoText}>Trabajo: <StarRating rating={player.hardworking} /></Text>
-      <Text style={styles.infoText}>Competitivo: <StarRating rating={player.competitive} /></Text>
+    <Text style={styles.cardTitle}>Habilidades</Text>
+       {/* Interior */}
+       <Text style={styles.infoText}>
+       Interior: 
+       {player.interior ? (
+       <Text style={{ color: '#785c4c' }}>✔</Text> // Tic verde
+       ) : (
+       <Text style={{ color: '#785c4c' }}>✖</Text> // Cruz roja
+       )}
+       </Text>
+        {/* Exterior */}
+       <Text style={styles.infoText}>
+       Exterior: 
+       {player.exterior ? (
+       <Text style={{ color: '#785c4c' }}>✔</Text> // Tic verde
+       ) : (
+       <Text style={{ color: '#785c4c' }}>✖</Text> // Cruz roja
+       )}
+       </Text>
+        {/* Diestro */}
+        <Text style={styles.infoText}>
+       Diestro: 
+       {player.rightHanded ? (
+       <Text style={{ color: '#785c4c' }}>✔</Text> // Tic verde
+       ) : (
+       <Text style={{ color: '#785c4c' }}>✖</Text> // Cruz roja
+       )}
+       </Text>
+        {/* Zurdo */}
+        <Text style={styles.infoText}>
+       Zurdo: 
+       {player.leftHanded ? (
+       <Text style={{ color: '#785c4c' }}>✔</Text> // Tic verde
+       ) : (
+       <Text style={{ color: '#785c4c' }}>✖</Text> // Cruz roja
+       )}
+       </Text>
+       <Text style={styles.infoText}>
+       Coordinación: <StarRating rating={player.coordinated ?? 0} />
+       </Text>
+       <Text style={styles.infoText}>
+       Fuerza: <StarRating rating={player.strong ?? 0} />
+       </Text>
+       <Text style={styles.infoText}>
+       Trabajo: <StarRating rating={player.hardworking ?? 0} />
+       </Text>
+       <Text style={styles.infoText}>
+       Competitivo: <StarRating rating={player.competitive ?? 0} />
+       </Text>
     </View>
 
 
@@ -119,37 +170,37 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f4f4f4',
     paddingHorizontal: 10,
+    margin:50,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
-    padding: 15,
+    backgroundColor: '#f0bc94',
     borderRadius: 10,
     marginVertical: 10,
-    shadowColor: '#000',
+    shadowColor: '#785c4c',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 3,
   },
   playerImage: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginRight: 15,
+    width: 300,
+    height: 300,
+    borderRadius: 10,
+    margin:20,
   },
   headerInfo: {
     flex: 1,
   },
   name: {
-    fontSize: 20,
+    fontSize: 50,
     fontWeight: 'bold',
     color: '#333',
   },
   position: {
-    fontSize: 16,
-    color: '#777',
+    fontSize: 40,
+    color: '#333',
   },
   modalOverlay: {
     flex: 1,
@@ -174,7 +225,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f0bc94',
     padding: 15,
     borderRadius: 10,
     marginVertical: 10,
@@ -185,7 +236,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#555',
@@ -194,8 +245,9 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   infoText: {
-    fontSize: 14,
+    fontSize: 28,
     marginVertical: 2,
     color: '#444',
   },
+  
 });

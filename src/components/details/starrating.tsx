@@ -43,24 +43,25 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   starFull: {
-    color: '#FFD700', // Oro.
-    fontSize: 20,
-    marginHorizontal: 2,
+    color: '#223854', 
+    fontSize: 30,
+    marginHorizontal: 1,
   },
   starHalf: {
-    color: '#FFD700', // Oro.
-    fontSize: 20,
+    color: '#223854',
+    fontSize: 30,
     marginHorizontal: 2,
     opacity: 0.5, // Simula media estrella.
   },
   starEmpty: {
-    color: '#D3D3D3', // Gris claro.
-    fontSize: 20,
+    color: '#9f8564', 
+    fontSize: 30,
     marginHorizontal: 2,
+
   },
   ratingText: {
     fontSize: 16,
     color: '#333',
-    marginLeft: 8,
+    marginLeft: 2,
   },
 });
