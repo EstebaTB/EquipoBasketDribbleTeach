@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f4f4f4',
     paddingHorizontal: 10,
-    margin:50,
+    margin:20,
   },
   header: {
     flexDirection: 'row',
@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   playerImage: {
-    width: 300,
-    height: 300,
+    width: 200,
+    height: 200,
     borderRadius: 10,
     margin:20,
   },
@@ -194,12 +194,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    fontSize: 50,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#333',
   },
   position: {
-    fontSize: 40,
+    fontSize: 30,
     color: '#333',
   },
   modalOverlay: {
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   cardTitle: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#555',
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   infoText: {
-    fontSize: 28,
+    fontSize: 18,
     marginVertical: 2,
     color: '#444',
   },
