@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "286353703122",
+    "project_id": "equipobasquet-8b3aa",
+    "storage_bucket": "equipobasquet-8b3aa.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286353703122:android:2dbc600ecc970d632ead0b",
+        "android_client_info": {
+          "package_name": "com.codedribblers.equipobasquet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfO-d7cc98aRpGDRCLDiDoXLHIukM9wSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
