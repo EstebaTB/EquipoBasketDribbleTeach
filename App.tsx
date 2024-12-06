@@ -1,47 +1,79 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
-import {Image, StatusBar, StyleSheet} from 'react-native';
+import {Image, StatusBar, StyleSheet, Button} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import PlayerDetailsScreen from './src/components/details/playerDetails';
-import PlayersScreen from './src/components/home/playersScreen';
+import PlayerScreen from './src/components/home/componentDidMount';
+import MediaScreen from './src/components/media/media';
 
+// Crear el stack de navegación
 const Stack = createNativeStackNavigator();
 
+// Componente principal
 function App(): React.JSX.Element {
-  // const isDarkMode = useColorScheme() === 'dark';
-
   const backgroundStyle = {
     backgroundColor: 'rgb(35, 56, 83)',
   };
-  const logo = () => (
-    <Image source={require('./src/assets/img/logo.png')} style={styles.logo} />
-  );
+
+  const Logo = () => (
+  <Image source={require('./src/assets/img/logo.png')} style={styles.logo} />
+);
 
   return (
     <NavigationContainer>
       <StatusBar backgroundColor={backgroundStyle.backgroundColor} />
       <Stack.Navigator>
+        {/* Pantalla de jugadores */}
         <Stack.Screen
           name="Players"
-          component={PlayersScreen}
+          component={PlayerScreen}
           options={{
             headerStyle: backgroundStyle,
             headerTintColor: Colors.white,
             headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
             headerTitleAlign: 'center',
-            headerLeft: logo,
-            contentStyle: {backgroundColor: '#a7beff'},
+            headerLeft: Logo,
+            title: 'Dribble Teach',
           }}
         />
-        <Stack.Screen name="Details" component={PlayerDetailsScreen} />
+        {/* Pantalla de detalles */}
+        <Stack.Screen
+          name="Details"
+          component={PlayerDetailsScreen}
+          options={({ route, navigation }) => {
+            const player = route.params; // Recibe el jugador desde los parámetros
+            return {
+              headerStyle: backgroundStyle,
+              headerTintColor: Colors.white,
+              headerTitleStyle: { fontWeight: 'bold', fontSize: 24 },
+              headerTitleAlign: 'center',
+              title: 'Detalles del jugador',
+              headerRight: () => (
+                <Button
+                  title="Media"
+                  color={backgroundStyle.backgroundColor}
+                  onPress={() => {
+                    console.log('Navegando a Media con jugador:', player); // Verifica que el jugador es válido
+                    navigation.navigate('Media', { player }); // Pasa el jugador a Media
+                  }}
+                />
+              ),
+            };
+          }}
+        />
+        {/* Pantalla de Multimedia */}
+        <Stack.Screen
+          name="Media"
+          component={MediaScreen} // Registra la nueva pantalla
+          options={{
+            headerStyle: backgroundStyle,
+            headerTintColor: Colors.white,
+            headerTitleStyle: {fontWeight: 'bold', fontSize: 24},
+            headerTitleAlign: 'center',
+            title: 'Multimedia del jugador',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
